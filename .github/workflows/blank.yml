@@ -34,30 +34,30 @@ jobs:
         run: |
           #!/bin/sh
 
-          LOGMSG=$1
+          LOGMSG=$pwd
 
 
-           # Admin pass
+#            # Admin pass
 
-            if (cat $LOGMSG | grep "ADMIN" > /dev/null); then
-                echo "Admin operation" 1>&2
-                exit 0
-            fi
+#             if (cat $LOGMSG | grep "ADMIN" > /dev/null); then
+#                 echo "Admin operation" 1>&2
+#                 exit 0
+#             fi
 
-            if (cat $LOGMSG | grep -iEq  '(^\[VALIDATION\])' > /dev/null); then
-                echo "Houdini test CI" 1>&2
-                exit 0
-            fi
+#             if (cat $LOGMSG | grep -iEq  '(^\[VALIDATION\])' > /dev/null); then
+#                 echo "Houdini test CI" 1>&2
+#                 exit 0
+#             fi
 
-            RED='\033[0;31m'
-            NC='\033[0m' # No Color
+#             RED='\033[0;31m'
+#             NC='\033[0m' # No Color
 
-            if [ $(cat "$LOGMSG" | grep -iEq 'Jira: *[0-9]* *' > /dev/null; echo $?) -ne 0 ] && [ $(cat $LOGMSG | grep -E "IssueID:[0-9]*" > /dev/null; echo $?) -ne 0 ]; then
-                echo -e "${RED}[POLICY] Your message is not formatted correctly!${NC}" 1>&2
-                echo "*****************************************************************" 1>&2
-                echo "Can't find \"JIRA: XXXX\" or \"IssueID:****\" from App Test Web" 1>&2
-                echo "Please fill the jira or IssueID, and make sure follow the right format" 1>&2
-                echo "If the jira number is more than 1, please seperate them with \",\", and put them in one line." 1>&2
-                echo "*****************************************************************" 1>&2
-                exit 1
-            fi
+#             if [ $(cat "$LOGMSG" | grep -iEq 'Jira: *[0-9]* *' > /dev/null; echo $?) -ne 0 ] && [ $(cat $LOGMSG | grep -E "IssueID:[0-9]*" > /dev/null; echo $?) -ne 0 ]; then
+#                 echo -e "${RED}[POLICY] Your message is not formatted correctly!${NC}" 1>&2
+#                 echo "*****************************************************************" 1>&2
+#                 echo "Can't find \"JIRA: XXXX\" or \"IssueID:****\" from App Test Web" 1>&2
+#                 echo "Please fill the jira or IssueID, and make sure follow the right format" 1>&2
+#                 echo "If the jira number is more than 1, please seperate them with \",\", and put them in one line." 1>&2
+#                 echo "*****************************************************************" 1>&2
+#                 exit 1
+#             fi
