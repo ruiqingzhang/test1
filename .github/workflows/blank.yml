@@ -32,57 +32,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          cat << 'EOF' > .git/hooks/commit-msg
-          #!/bin/sh
-
-          LOGMSG=$1
-
-
-          # Admin pass
-
-          if (cat $LOGMSG | grep "ADMIN" > /dev/null); then
-              echo "Admin operation" 1>&2
-              exit 0
-          fi
-
-          if (cat $LOGMSG | grep -iEq  '(^\[VALIDATION\])' > /dev/null); then
-              echo "Houdini test CI" 1>&2
-              exit 0
-          fi
-
-          RED='\033[0;31m'
-          NC='\033[0m' # No Color
-
-          if [ $(cat "$LOGMSG" | grep -iEq 'Jira: *[0-9]* *' > /dev/null; echo $?) -ne 0 ] && [ $(cat $LOGMSG | grep -E "IssueID:[0-9]*" > /dev/null; echo $?) -ne 0 ]; then
-              echo -e "${RED}[POLICY] Your message is not formatted correctly!${NC}" 1>&2
-              echo "*****************************************************************" 1>&2
-              echo "Can't find \"JIRA: XXXX\" or \"IssueID:****\" from App Test Web" 1>&2
-              echo "Please fill the jira or IssueID, and make sure follow the right format" 1>&2
-              echo "If the jira number is more than 1, please seperate them with \",\", and put them in one line." 1>&2
-              echo "*****************************************************************" 1>&2
-              exit 1
-          fi
-
-          if !(cat $LOGMSG | grep "Checkin classification:" > /dev/null); then
-              echo -e "${RED}[POLICY] Your message is not formatted correctly!${NC}" 1>&2
-              echo "*****************************************************************" 1>&2
-              echo "Please input Checkin classification in CI log" 1>&2
-              echo "If CI for new feature, please input 'Checkin classification:new feature' " 1>&2
-              echo "If CI for bug fix, please input 'Checkin classification:bug fix' " 1>&2
-              echo "If CI for regression fix, please input 'Checkin classification:regression fix' " 1>&2
-              echo "*****************************************************************" 1>&2
-              exit 1
-          fi
-
-          if !(cat $LOGMSG | grep "Test result:" > /dev/null); then
-              echo -e "${RED}[POLICY] Your message is not formatted correctly!${NC}" 1>&2
-              echo "*****************************************************************" 1>&2
-              echo "Please input \"Test result: \<Pre-ci Test Link\>\" in commit msg!" 1>&2
-              echo "*****************************************************************" 1>&2
-              exit 1
-          fi
-
-          echo 0
-
-          EOF
+            # Email Notification
+            # echo "content" | mutt -e "my_hdr From:zhefeng.qiao@intel.com" -s "subject" zhefeng.qiao@intel.com
+            (echo "Hi ${author_name}";echo "Your Job Started, Jenkins Job URL: ${BUILD_URL}console"; echo"";echo "* Branch      : ${ref}"; echo "* Revision    : ${commit_id}"; echo "* Author      : ${author_name}"; echo "* Author Email: ${author_email}"; echo ""; echo ""; echo "Best Regards";echo "Houdini Validation Team") | mutt -e "my_hdr From:ruiqing.zhang@intel.com" -s "[HoudiniBuildStart][${branch_name}_${revision}][$(hostname -A)] ${BUILD_URL} " ruiqing.zhang@intel.com -c ruiqing.zhang@intel.com
 
