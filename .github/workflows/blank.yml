@@ -27,13 +27,15 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-      - run: echo Hello, world!
-      - run: mutt install
+        run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+            vim install
+            mutt install
+            mutt --version
             # Email Notification
             # echo "content" | mutt -e "my_hdr From:zhefeng.qiao@intel.com" -s "subject" zhefeng.qiao@intel.com
-            (echo "Hi ${author_name}";echo "Your Job Started, Jenkins Job URL: ${BUILD_URL}console"; echo"";echo "* Branch      : ${ref}"; echo "* Revision    : ${commit_id}"; echo "* Author      : ${author_name}"; echo "* Author Email: ${author_email}"; echo ""; echo ""; echo "Best Regards";echo "Houdini Validation Team") | mutt -e "my_hdr From:ruiqing.zhang@intel.com" -s "[HoudiniBuildStart][${branch_name}_${revision}][$(hostname -A)] ${BUILD_URL} " ruiqing.zhang@intel.com -c ruiqing.zhang@intel.com
+            #(echo "Hi ${author_name}";echo "Your Job Started, Jenkins Job URL: ${BUILD_URL}console"; echo"";echo "* Branch      : ${ref}"; echo "* Revision    : ${commit_id}"; echo "* Author      : ${author_name}"; echo "* Author Email: ${author_email}"; echo ""; echo ""; echo "Best Regards";echo "Houdini Validation Team") | mutt -e "my_hdr From:ruiqing.zhang@intel.com" -s "[HoudiniBuildStart][${branch_name}_${revision}][$(hostname -A)] ${BUILD_URL} " ruiqing.zhang@intel.com -c ruiqing.zhang@intel.com
 
