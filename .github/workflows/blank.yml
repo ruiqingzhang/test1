@@ -1,41 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+name: remote ssh command
+on: [push]
 jobs:
-  # This workflow contains a single job called "build"
+
   build:
-    # The type of runner that the job will run on
+    name: Build
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-            vim install
-            mutt install
-            mutt --version
-            # Email Notification
-            # echo "content" | mutt -e "my_hdr From:zhefeng.qiao@intel.com" -s "subject" zhefeng.qiao@intel.com
-            #(echo "Hi ${author_name}";echo "Your Job Started, Jenkins Job URL: ${BUILD_URL}console"; echo"";echo "* Branch      : ${ref}"; echo "* Revision    : ${commit_id}"; echo "* Author      : ${author_name}"; echo "* Author Email: ${author_email}"; echo ""; echo ""; echo "Best Regards";echo "Houdini Validation Team") | mutt -e "my_hdr From:ruiqing.zhang@intel.com" -s "[HoudiniBuildStart][${branch_name}_${revision}][$(hostname -A)] ${BUILD_URL} " ruiqing.zhang@intel.com -c ruiqing.zhang@intel.com
-
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
