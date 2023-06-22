@@ -4,7 +4,7 @@ name: Adding Timezone Database
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '* * * * *'
+    - cron:  '0 2 * * *'
 env:
   TZ: Asia/Shanghai
 
