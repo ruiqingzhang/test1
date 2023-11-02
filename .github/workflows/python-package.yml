@@ -6,10 +6,10 @@ name: Python package
 on:
 #   schedule:
 #     - cron: '* * * * *'
-  push:
+  # push:
+  #   branches: [ "main" ]
+  pull_request:
     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
 
 jobs:
   build:
