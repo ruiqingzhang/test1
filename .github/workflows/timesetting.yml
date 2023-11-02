@@ -1,10 +1,15 @@
 name: Adding Timezone Database
 
 # on: [push]
+# on:
+#   schedule:
+#     # * is a special character in YAML so you have to quote this string
+#     - cron:  '0 10 * * *'
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 10 * * *'
+  pull_request:
+    types:
+      - opened
+#   workflow_dispatch:
 env:
   TZ: Asia/Shanghai
 
