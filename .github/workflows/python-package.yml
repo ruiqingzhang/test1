@@ -31,6 +31,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         echo "DEBUG TEST"
+        branch_name=$(echo "${{ github.ref }}" | awk -F'/' '{print $NF}')
+            echo $branch_name
+            echo ${{ github.sha }}
     #     if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     # - name: Lint with flake8
     #   run: |
